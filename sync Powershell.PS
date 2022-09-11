@@ -1,0 +1,18 @@
+$Source@”
+$source$FolderPath1='F:\task office/task2folder1'
+$FolderPath2='F:\task office/task2folder2'
+$FolderFile1=Get-ChildItem -Path $FolderPath1
+$FolderFile2=Get-ChildItem -Path $FolderPath2
+$FileDiffs=Compare-Object -referenceObject $FolderFile1 -DifferenceObject $FolderFile2
+$FileDiffs | foreach{
+$copyParams=@{
+'Path'=$_.InputObject.FullName
+}
+if($_.SideIndicator -eq '<=')
+{
+$copyParams.Destination=$FolderPath2
+}
+else{
+$copyParams.Destination=$FolderPath1}
+Copy-Item @copyParams
+}@”
